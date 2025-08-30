@@ -1,80 +1,78 @@
 export const resources = [
 	{
-		name: 'Project',
-		value: 'project',
+		name: 'Budget',
+		value: 'budget',
+	},
+	{
+		name: 'Accounts',
+		value: 'accounts',
 		routing: {
 			request: {
-				url: '/projects'
+				url: '/accounts'
 			}
 		}
 	},
 	{
-		name: 'Project Photo',
-		value: 'projectPhoto',
+		name: 'Categories',
+		value: 'categories',
 		routing: {
 			request: {
-				url: '/projects'
+				url: '/categories'
 			}
 		}
 	},
 	{
-		name: 'Project Collaborator',
-		value: 'projectCollaborator',
-	},
-	{
-		name: 'Project Document',
-		value: 'projectDocument',
+		name: 'Payees',
+		value: 'payees',
 		routing: {
 			request: {
-				url: '/projects'
+				url: '/payees'
 			}
 		}
 	},
 	{
-		name: 'Project User',
-		value: 'projectUser',
+		name: 'Payee Locations',
+		value: 'categories',
 		routing: {
 			request: {
-				url: '/projects'
+				url: '/payee_locations'
 			}
 		}
 	},
 	{
-		name: 'Project Label',
-		value: 'projectLabel',
+		name: 'Months',
+		value: 'months',
 		routing: {
 			request: {
-				url: '/projects'
+				url: '/months'
 			}
 		}
 	},
 	{
-		name: 'Project Checklist',
-		value: 'projectChecklist',
+		name: 'Transactions',
+		value: 'transactions',
 		routing: {
 			request: {
-				url: '/projects'
+				url: '/transactions'
 			}
 		}
 	},
 	{
-		name: 'User',
-		value: 'user',
+		name: 'Transactions',
+		value: 'transactions',
+		routing: {
+			request: {
+				url: '/transactions'
+			}
+		}
 	},
 	{
-		name: 'Photo',
-		value: 'photo',
-	},
-	{
-		name: 'Tag',
-		value: 'tag',
-	},
-	{
-		name: 'Group',
-		value: 'group',
-	},
-	{
-		name: 'Other',
-		value: 'other',
+		name: 'Scheduled Transactions',
+		value: 'scheduledTransactions',
+		routing: {
+			request: {
+				url: '/scheduled_transactions'
+			}
+		}
 	},
 ]

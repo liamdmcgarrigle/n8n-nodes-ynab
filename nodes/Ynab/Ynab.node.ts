@@ -3,20 +3,18 @@ import {
 	INodeTypeDescription,
     NodeConnectionType,
 } from 'n8n-workflow';
-import { projectFields, projectOperations } from './Descriptions/ProjectDescription';
-import { notBuildNotice } from './NotBuiltYetNotice';
-import { projectPhotoFields, projectPhotoOperations } from './Descriptions/ProjectPhotoDescription';
-import { projectCollaboratorFields, projectCollaboratorOperations } from './Descriptions/ProjectCollaboratorDescription';
-import { projectDocumentOperations } from './Descriptions/ProjectDocumentDescription';
-import { projectUserOperations } from './Descriptions/ProjectUserDescription';
-import { projectLabelOperations } from './Descriptions/ProjectLabelDescription';
+// import { projectFields, projectOperations } from './Descriptions/ProjectDescription';
+// import { notBuildNotice } from './NotBuiltYetNotice';
+// import { projectPhotoFields, projectPhotoOperations } from './Descriptions/ProjectPhotoDescription';
+// import { projectDocumentOperations } from './Descriptions/ProjectDocumentDescription';
+// import { projectUserOperations } from './Descriptions/ProjectUserDescription';
+// import { projectLabelOperations } from './Descriptions/ProjectLabelDescription';
 import { resources } from './Resources';
-import { projectChecklistOperations } from './Descriptions/ProjectChecklistDescription';
-import { userOperations } from './UserDescription';
-import { photoOperations } from './Descriptions/PhotoDescription';
-import { tagOperations } from './TagDescription';
-import { groupOperations } from './Descriptions/groupDescription';
-import { otherOperations } from './Descriptions/otherDescription';
+// import { userOperations } from './UserDescription';
+// import { tagOperations } from './TagDescription';
+// import { groupOperations } from './Descriptions/groupDescription';
+// import { otherOperations } from './Descriptions/otherDescription';
+import { budgetOperations } from './Descriptions/BudgetDescription';
 
 export class Ynab implements INodeType {
 	description: INodeTypeDescription = {
@@ -30,7 +28,7 @@ export class Ynab implements INodeType {
 			name: 'YNAB',
 		},
 		requestDefaults: {
-			baseURL: 'https://api.ynab.com/v1',
+			baseURL: '=https://api.ynab.com/v1/budgets/{{$credentials.budgetId}}',
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
@@ -59,43 +57,36 @@ export class Ynab implements INodeType {
 				],
 			},
 
-			...projectOperations,
-			...projectFields,
+			...budgetOperations,
 
-			...projectPhotoOperations,
-			...projectPhotoFields,
-
-			...projectCollaboratorOperations,
-			...projectCollaboratorFields,
-
-			...projectDocumentOperations,
-			// ...projectDocumentFields,
-
-			...projectUserOperations,
-			// ...projectUserFields,
-
-			...projectLabelOperations,
-			// ...projectLabelFields,
-
-			...projectChecklistOperations,
-			// ...projectChecklistFields,
-
-			...userOperations,
-			// ...userFields,
-
-			...photoOperations,
-			// ...photoFields,
-
-			...tagOperations,
-			// ...tagFields,
-
-			...groupOperations,
-			// ...groupFields,
-
-			...otherOperations,
-			// ...otherFields,
-
-			...notBuildNotice
+			// ...projectOperations,
+			// ...projectFields,
+			//
+			// ...projectPhotoOperations,
+			// ...projectPhotoFields,
+			//
+			// ...projectDocumentOperations,
+			// // ...projectDocumentFields,
+			//
+			// ...projectUserOperations,
+			// // ...projectUserFields,
+			//
+			// ...projectLabelOperations,
+			// // ...projectLabelFields,
+			//
+			// ...userOperations,
+			// // ...userFields,
+			//
+			// ...tagOperations,
+			// // ...tagFields,
+			//
+			// ...groupOperations,
+			// // ...groupFields,
+			//
+			// ...otherOperations,
+			// // ...otherFields,
+			//
+			// ...notBuildNotice
 		],
 	};
 

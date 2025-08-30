@@ -21,6 +21,12 @@ export class YnabApi implements ICredentialType {
 			},
 			default: '',
 		},
+		{
+			displayName: 'Budget Id',
+			name: 'budgetId',
+			type: 'string',
+		  default: '',
+		},
 	];
 
 	authenticate: IAuthenticateGeneric = {
