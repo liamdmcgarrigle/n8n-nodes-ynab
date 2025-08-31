@@ -385,14 +385,14 @@ export const transactionsFields: INodeProperties[] = [
 							},
 							{
 								displayName: 'Payee ID',
-								name: 'payeeId',
+								name: 'payee_id',
 								type: 'string',
 								required: false,
 								default: '',
 							},
 							{
 								displayName: 'Payee Name',
-								name: 'payeeName',
+								name: 'payee_name',
 								description: 'If a payee name value is provided and payee id has a null value, the payee name value will be used to resolve the payee by either (1) a payee with the same name or (2) creation of a new payee.',
 								type: 'string',
 								required: false,
@@ -400,7 +400,7 @@ export const transactionsFields: INodeProperties[] = [
 							},
 							{
 								displayName: 'Category ID',
-								name: 'categoryId',
+								name: 'category_id',
 								description: 'The category for the subtransaction. Credit Card Payment categories are not permitted and will be ignored if supplied.',
 								type: 'string',
 								required: false,
@@ -419,6 +419,30 @@ export const transactionsFields: INodeProperties[] = [
 			},
 		],
 	},
+
+
+	//
+	// CREATE MULTIPLE TRANSACTIONS
+	//
+
+	{
+		displayName: 'Transactions JSON',
+		name: 'transactionsJson',
+		type: 'json',
+		default: '[\n  {\n    \"date\": \"2025-08-31\", // required\n    \"amount\": 0, // IMPORTANT - value in milliunits - required\n   \"account_id\": \"account id\", // required \n    \"memo\": \"Memo text\",\n    \"cleared\": \"cleared\",\n    \"payee_id\": \"payee id\",\n    \"category_id\": \"category id\",\n    \"payee_name\": \"payee name\"\n  },\n  {\n    \"date\": \"2025-08-31\", \n    \"amount\": 0, \n   \"account_id\": \"account id\", \n    \"memo\": \"Memo text\",\n    \"cleared\": \"cleared\",\n    \"payee_id\": \"payee id\",\n    \"category_id\": \"category id\",\n    \"payee_name\": \"payee name\"\n  }\n]',
+		description: 'Custom JSON allows for batch creation',
+		displayOptions: {
+			show: {
+				resource: [
+					'transactions',
+				],
+				operation: [
+					'createTransactions',
+				]
+			}
+		},
+	},
+
 
 	//
 	// CREATE PROJECT
