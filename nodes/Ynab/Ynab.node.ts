@@ -9,17 +9,7 @@ import {
     NodeOperationError,
 } from 'n8n-workflow';
 import { DateTime } from 'luxon';
-// import { projectFields, projectOperations } from './Descriptions/ProjectDescription';
-// import { notBuildNotice } from './NotBuiltYetNotice';
-// import { projectPhotoFields, projectPhotoOperations } from './Descriptions/ProjectPhotoDescription';
-// import { projectDocumentOperations } from './Descriptions/ProjectDocumentDescription';
-// import { projectUserOperations } from './Descriptions/ProjectUserDescription';
-// import { projectLabelOperations } from './Descriptions/ProjectLabelDescription';
 import { resources } from './Resources';
-// import { userOperations } from './UserDescription';
-// import { tagOperations } from './TagDescription';
-// import { groupOperations } from './Descriptions/groupDescription';
-// import { otherOperations } from './Descriptions/otherDescription';
 import { budgetOperations } from './Descriptions/BudgetDescription';
 import { accountsFields, accountsOperations } from './Descriptions/accountsDescription';
 import { categoryFields, categoryOperations } from './Descriptions/categoryDescription';
@@ -28,6 +18,7 @@ import { payeeFields, payeeOperations } from './Descriptions/payeeDescription';
 import { payeeLocationsFields, payeeLocationsOperations } from './Descriptions/PayeeLocationsDescription';
 import { monethsFields, monthsOperations } from './Descriptions/MonthsDescription';
 import { transactionsFields, transactionsOperations } from './Descriptions/TransactionsDescription';
+import { scheduledTransactionsFields, scheduledTransactionsOperations } from './Descriptions/ScheduledTransactionsDescription';
 
 export class Ynab implements INodeType {
 	description: INodeTypeDescription = {
@@ -90,35 +81,8 @@ export class Ynab implements INodeType {
 			...transactionsOperations,
 			...transactionsFields,
 
-
-			// ...projectOperations,
-			// ...projectFields,
-			//
-			// ...projectPhotoOperations,
-			// ...projectPhotoFields,
-			//
-			// ...projectDocumentOperations,
-			// // ...projectDocumentFields,
-			//
-			// ...projectUserOperations,
-			// // ...projectUserFields,
-			//
-			// ...projectLabelOperations,
-			// // ...projectLabelFields,
-			//
-			// ...userOperations,
-			// // ...userFields,
-			//
-			// ...tagOperations,
-			// // ...tagFields,
-			//
-			// ...groupOperations,
-			// // ...groupFields,
-			//
-			// ...otherOperations,
-			// // ...otherFields,
-			//
-			// ...notBuildNotice
+			...scheduledTransactionsOperations,
+			...scheduledTransactionsFields,
 		],
 	};
 
@@ -690,7 +654,7 @@ export class Ynab implements INodeType {
 
 							const additionalFields = this.getNodeParameter('additionalFields', itemIndex) as IDataObject; // gets values under additionalFields
 							const subtransactions = (additionalFields.subtransactions as any)?.subtransactionFields as any;
-							subtransactions?.map((i: { amount: number; }) => i.amount = i.amount * 1_000 );
+							subtransactions?.map((i: { amount: number; }) => i.amount *= 1_000 );
 							const payeeId = additionalFields.payeeId;
 							const payeeName = additionalFields.payeeName;
 							const categoryId = additionalFields.categoryId;
@@ -748,13 +712,139 @@ export class Ynab implements INodeType {
 							item.json = response['data']['transaction'];
 						}
 
-						if( this.getNodeParameter('operation', 0) === 'getLocationByPayee' ) {
+						if( this.getNodeParameter('operation', 0) === 'createTransactions' ) {
 
-							const payeeId = this.getNodeParameter('payeeId', itemIndex, '') as string;
+							const jsonInput = this.getNodeParameter('transactionsJson', itemIndex, '') as string;
+							const parsedJson = JSON.parse(jsonInput);
+							parsedJson.map((i: { amount: number; }) => i.amount *= 1_000);
+
+							const body = {
+								transactions: parsedJson
+							}
+
+							const options: IHttpRequestOptions = {
+								url: `${baseUrl}/transactions`,
+								method: 'POST',
+								body: body,
+							};
+
+							const response = await this.helpers.httpRequestWithAuthentication.call(
+								this,
+								'YnabApi',
+								options,
+							);
+
+							item.json = response['data'];
+							// item.json.thing = body;
+						}
+
+						if( this.getNodeParameter('operation', 0) === 'updateTransaction' ) {
+
+
+							const transactionId = this.getNodeParameter('transactionId', itemIndex, '') as string;
+							const amount = (this.getNodeParameter('amount', itemIndex, '') as number) * 1_000;
+							const accountId = this.getNodeParameter('accountId', itemIndex, '') as string;
+
+
+							const inputDate = this.getNodeParameter('date', itemIndex, '') as string;
+							const date = DateTime.fromISO(inputDate).toFormat('yyyy-MM-dd');
+
+							const additionalFields = this.getNodeParameter('additionalFields', itemIndex) as IDataObject; // gets values under additionalFields
+							const subtransactions = (additionalFields.subtransactions as any)?.subtransactionFields as any;
+							subtransactions?.map((i: { amount: number; }) => i.amount *= 1_000 );
+							const payeeId = additionalFields.payeeId;
+							const payeeName = additionalFields.payeeName;
+							const categoryId = additionalFields.categoryId;
+							const memo = additionalFields.memo;
+							const cleared = additionalFields.cleared;
+
+							const body: any = {
+								transaction: {}
+							}
+
+							if (inputDate) {
+								body.transaction.date = date;
+							}
+
+							if (accountId) {
+								body.transaction.account_id = accountId;
+							}
+
+							if (amount) {
+								body.transaction.amount = amount;
+							}
+
+							if (payeeId) {
+								body.transaction.payee_id = payeeId;
+							}
+
+							if (payeeName) {
+								body.transaction.payee_name = payeeName;
+							}
+
+							if (categoryId) {
+								body.transaction.category_id = categoryId;
+							}
+
+							if (memo) {
+								body.transaction.memo = memo;
+							}
+
+							if (cleared) {
+								body.transaction.cleared = cleared;
+							}
+
+							if (subtransactions) {
+								body.transaction.subtransactions = subtransactions;
+							}
 
 
 							const options: IHttpRequestOptions = {
-								url: `${baseUrl}/payees/${payeeId}/payee_locations`,
+								url: `${baseUrl}/transactions/${transactionId}`,
+								method: 'PUT',
+								body: body,
+							};
+
+							const response = await this.helpers.httpRequestWithAuthentication.call(
+								this,
+								'YnabApi',
+								options,
+							);
+
+							item.json = response['data']['transaction'];
+						}
+
+						if( this.getNodeParameter('operation', 0) === 'deleteTransaction' ) {
+
+							const transactionId = this.getNodeParameter('transactionId', itemIndex, '') as string;
+
+
+							const options: IHttpRequestOptions = {
+								url: `${baseUrl}/transactions/${transactionId}`,
+								method: 'DELETE',
+							};
+
+							const response = await this.helpers.httpRequestWithAuthentication.call(
+								this,
+								'YnabApi',
+								options,
+							);
+
+							item.json = response['data']['transaction'];
+						}
+
+					} // end of transaction resourse
+
+					if( this.getNodeParameter('resource', 0) === 'scheduledTransactions' ) {
+
+
+					// ------------------------------------------------------------------
+					// ---------------------- SCHEDULED TRANSACTIONS OPERATIONS ----------------------
+					// ------------------------------------------------------------------
+						if( this.getNodeParameter('operation', 0) === 'listScheduledTransactions' ) {
+
+							const options: IHttpRequestOptions = {
+								url: `${baseUrl}/scheduled_transactions`,
 								method: 'GET',
 							};
 
@@ -765,6 +855,267 @@ export class Ynab implements INodeType {
 							);
 
 							item.json = response['data'];
+						}
+
+						if( this.getNodeParameter('operation', 0) === 'getScheduledTransaction' ) {
+
+							const scheduledTransactionId = this.getNodeParameter('scheduledTransactionId', itemIndex, '') as string;
+
+
+							const options: IHttpRequestOptions = {
+								url: `${baseUrl}/scheduled_transactions/${scheduledTransactionId}`,
+								method: 'GET',
+							};
+
+							const response = await this.helpers.httpRequestWithAuthentication.call(
+								this,
+								'YnabApi',
+								options,
+							);
+
+							item.json = response['data']['scheduled_transaction'];
+						}
+
+						if( this.getNodeParameter('operation', 0) === 'createScheduledTransaction' ) {
+
+
+							const amount = (this.getNodeParameter('amount', itemIndex, '') as number) * 1_000;
+							const accountId = this.getNodeParameter('accountId', itemIndex, '') as string;
+							const frequency = this.getNodeParameter('frequency', itemIndex, '') as string;
+
+
+							const inputDate = this.getNodeParameter('date', itemIndex, '') as string;
+							const date = DateTime.fromISO(inputDate).toFormat('yyyy-MM-dd');
+
+							const additionalFields = this.getNodeParameter('additionalFields', itemIndex) as IDataObject; // gets values under additionalFields
+							const subtransactions = (additionalFields.subtransactions as any)?.subtransactionFields as any;
+							subtransactions?.map((i: { amount: number; }) => i.amount *= 1_000 );
+							const payeeId = additionalFields.payeeId;
+							const payeeName = additionalFields.payeeName;
+							const categoryId = additionalFields.categoryId;
+							const memo = additionalFields.memo;
+
+							const body: any = {
+								scheduled_transaction: {
+									date: date,
+									account_id: accountId,
+									frequency: frequency,
+								}
+							}
+
+							if (amount) {
+								body.scheduled_transaction.amount = amount;
+							}
+
+							if (payeeId) {
+								body.scheduled_transaction.payee_id = payeeId;
+							}
+
+							if (payeeName) {
+								body.scheduled_transaction.payee_name = payeeName;
+							}
+
+							if (categoryId) {
+								body.scheduled_transaction.category_id = categoryId;
+							}
+
+							if (memo) {
+								body.scheduled_transaction.memo = memo;
+							}
+
+							if (subtransactions) {
+								body.scheduled_transaction.subtransactions = subtransactions;
+							}
+
+							const options: IHttpRequestOptions = {
+								url: `${baseUrl}/scheduled_transactions`,
+								method: 'POST',
+								body: body,
+							};
+
+							const response = await this.helpers.httpRequestWithAuthentication.call(
+								this,
+								'YnabApi',
+								options,
+							);
+
+							item.json = response['data']['scheduled_transaction'];
+						}
+
+						if( this.getNodeParameter('operation', 0) === 'updateScheduledTransaction' ) {
+
+
+							const scheduledTransactionId = this.getNodeParameter('scheduledTransactionId', itemIndex, '') as string;
+							const amount = (this.getNodeParameter('amount', itemIndex, '') as number) * 1_000;
+							const accountId = this.getNodeParameter('accountId', itemIndex, '') as string;
+							const frequency = this.getNodeParameter('frequency', itemIndex, '') as string;
+
+
+							const inputDate = this.getNodeParameter('date', itemIndex, '') as string;
+							const date = DateTime.fromISO(inputDate).toFormat('yyyy-MM-dd');
+
+							const additionalFields = this.getNodeParameter('additionalFields', itemIndex) as IDataObject; // gets values under additionalFields
+							const subtransactions = (additionalFields.subtransactions as any)?.subtransactionFields as any;
+							subtransactions?.map((i: { amount: number; }) => i.amount *= 1_000 );
+							const payeeId = additionalFields.payeeId;
+							const payeeName = additionalFields.payeeName;
+							const categoryId = additionalFields.categoryId;
+							const memo = additionalFields.memo;
+
+							const body: any = {
+								scheduled_transaction: { 	}
+							}
+
+							if (frequency) {
+								body.scheduled_transaction.frequency = frequency;
+							}
+
+							if (accountId) {
+								body.scheduled_transaction.account_id = accountId;
+							}
+
+							if (inputDate) {
+								body.scheduled_transaction.date = date;
+							}
+
+							if (amount) {
+								body.scheduled_transaction.amount = amount;
+							}
+
+							if (payeeId) {
+								body.scheduled_transaction.payee_id = payeeId;
+							}
+
+							if (payeeName) {
+								body.scheduled_transaction.payee_name = payeeName;
+							}
+
+							if (categoryId) {
+								body.scheduled_transaction.category_id = categoryId;
+							}
+
+							if (memo) {
+								body.scheduled_transaction.memo = memo;
+							}
+
+							if (subtransactions) {
+								body.scheduled_transaction.subtransactions = subtransactions;
+							}
+
+							const options: IHttpRequestOptions = {
+								url: `${baseUrl}/scheduled_transactions/${scheduledTransactionId}`,
+								method: 'PATCH',
+								body: body,
+							};
+
+							const response = await this.helpers.httpRequestWithAuthentication.call(
+								this,
+								'YnabApi',
+								options,
+							);
+
+							item.json = response['data']['scheduled_transaction'];
+						}
+						if( this.getNodeParameter('operation', 0) === 'updateTransaction' ) {
+
+
+							const transactionId = this.getNodeParameter('transactionId', itemIndex, '') as string;
+							const amount = (this.getNodeParameter('amount', itemIndex, '') as number) * 1_000;
+							const accountId = this.getNodeParameter('accountId', itemIndex, '') as string;
+
+
+							const inputDate = this.getNodeParameter('date', itemIndex, '') as string;
+							const date = DateTime.fromISO(inputDate).toFormat('yyyy-MM-dd');
+
+							const additionalFields = this.getNodeParameter('additionalFields', itemIndex) as IDataObject; // gets values under additionalFields
+							const subtransactions = (additionalFields.subtransactions as any)?.subtransactionFields as any;
+							subtransactions?.map((i: { amount: number; }) => i.amount *= 1_000 );
+							const payeeId = additionalFields.payeeId;
+							const payeeName = additionalFields.payeeName;
+							const categoryId = additionalFields.categoryId;
+							const memo = additionalFields.memo;
+							const cleared = additionalFields.cleared;
+							const frequency = additionalFields.frequency;
+
+
+							const body: any = {
+								transaction: {}
+							}
+
+							if (inputDate) {
+								body.transaction.date = date;
+							}
+
+							if (accountId) {
+								body.transaction.account_id = accountId;
+							}
+
+							if (amount) {
+								body.transaction.amount = amount;
+							}
+
+							if (payeeId) {
+								body.transaction.payee_id = payeeId;
+							}
+
+							if (payeeName) {
+								body.transaction.payee_name = payeeName;
+							}
+
+							if (categoryId) {
+								body.transaction.category_id = categoryId;
+							}
+
+							if (memo) {
+								body.transaction.memo = memo;
+							}
+
+							if (cleared) {
+								body.transaction.cleared = cleared;
+							}
+
+							if (frequency) {
+								body.transaction.frequency = frequency;
+							}
+
+
+							if (subtransactions) {
+								body.transaction.subtransactions = subtransactions;
+							}
+
+
+							const options: IHttpRequestOptions = {
+								url: `${baseUrl}/transactions/${transactionId}`,
+								method: 'PUT',
+								body: body,
+							};
+
+							const response = await this.helpers.httpRequestWithAuthentication.call(
+								this,
+								'YnabApi',
+								options,
+							);
+
+							item.json = response['data']['transaction'];
+						}
+
+						if( this.getNodeParameter('operation', 0) === 'deleteTransaction' ) {
+
+							const transactionId = this.getNodeParameter('transactionId', itemIndex, '') as string;
+
+
+							const options: IHttpRequestOptions = {
+								url: `${baseUrl}/transactions/${transactionId}`,
+								method: 'DELETE',
+							};
+
+							const response = await this.helpers.httpRequestWithAuthentication.call(
+								this,
+								'YnabApi',
+								options,
+							);
+
+							item.json = response['data']['transaction'];
 						}
 
 					} // end of transaction resourse

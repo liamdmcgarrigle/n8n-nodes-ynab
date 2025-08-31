@@ -1,6 +1,6 @@
 import { INodeProperties } from "n8n-workflow";
 
-export const transactionsOperations: INodeProperties[] = [
+export const scheduledTransactionsOperations: INodeProperties[] = [
 	{
 		displayName: 'Operation',
 		name: 'operation',
@@ -9,56 +9,36 @@ export const transactionsOperations: INodeProperties[] = [
 		// eslint-disable-next-line n8n-nodes-base/node-param-options-type-unsorted-items
 		options: [
 			{
-				name: 'List Transactions',
-				value: 'listTransactions',
-				action: 'List transactions',
+				name: 'List Scheduled Transactions',
+				value: 'listScheduledTransactions',
+				action: 'List scheduled transactions',
 			},
 			{
-				name: 'Get Transaction',
-				value: 'getTransaction',
-				action: 'Get transaction',
+				name: 'Get Scheduled Transaction',
+				value: 'getScheduledTransaction',
+				action: 'Get scheduled transaction',
 			},
 			{
-				name: 'Get Transaction by Category',
-				value: 'getTransactionByCategory',
-				action: 'Get transaction by category',
+				name: 'Create Scheduled Transaction',
+				value: 'createScheduledTransaction',
+				action: 'Create scheduled transaction',
 			},
 			{
-				name: 'Get Transaction by Payee',
-				value: 'getTransactionByPayee',
-				action: 'Get transaction by payee',
+				name: 'Update Scheduled Transaction',
+				value: 'updateScheduledTransaction',
+				action: 'Update scheduled transaction',
 			},
 			{
-				name: 'Get Transaction by Month',
-				value: 'getTransactionByMonth',
-				action: 'Get transaction by month',
-			},
-			{
-				name: 'Create Transaction',
-				value: 'createTransaction',
-				action: 'Create transaction',
-			},
-			{
-				name: 'Create Transactions',
-				value: 'createTransactions',
-				action: 'Create transactions',
-			},
-			{
-				name: 'Update Transaction',
-				value: 'updateTransaction',
-				action: 'Update transaction',
-			},
-			{
-				name: 'Delete Transaction',
-				value: 'deleteTransaction',
-				action: 'Delete transaction',
+				name: 'Delete Scheduled Transaction',
+				value: 'deleteScheduledTransaction',
+				action: 'Delete scheduled transaction',
 			},
 		],
-		default: 'listTransactions',
+		default: 'listScheduledTransactions',
 		displayOptions: {
 			show: {
 				resource: [
-					'transactions',
+					'scheduledTransactions',
 				]
 			},
 		},
@@ -66,104 +46,27 @@ export const transactionsOperations: INodeProperties[] = [
 ]
 
 
-export const transactionsFields: INodeProperties[] = [
+export const scheduledTransactionsFields: INodeProperties[] = [
 
 	{
-		displayName: 'Transaction ID',
-		name: 'transactionId',
+		displayName: 'Scheduled Transaction ID',
+		name: 'scheduledTransactionId',
 		type: 'string',
 		required: true,
 		default: '',
 		displayOptions: {
 			show: {
 				resource: [
-					'transactions',
+					'scheduledTransactions',
 				],
 				operation: [
-					'getTransaction',
-					'updateTransaction',
-					'deleteTransaction',
+					'getScheduledTransaction',
+					'updateScheduledTransaction',
+					'deleteScheduledTransaction',
 				]
 			}
 		},
 	},
-	{
-		displayName: 'Category ID',
-		name: 'categoryId',
-		type: 'string',
-		required: true,
-		default: '',
-		displayOptions: {
-			show: {
-				resource: [
-					'transactions',
-				],
-				operation: [
-					'getTransactionByCategory',
-				]
-			}
-		},
-	},
-	{
-		displayName: 'Payee ID',
-		name: 'payeeId',
-		type: 'string',
-		required: true,
-		default: '',
-		displayOptions: {
-			show: {
-				resource: [
-					'transactions',
-				],
-				operation: [
-					'getTransactionByPayee',
-				]
-			}
-		},
-	},
-	{
-		displayName: 'Month',
-		name: 'month',
-		type: 'dateTime',
-		required: true,
-		default: '',
-		description: 'Only the year & month is used',
-		displayOptions: {
-			show: {
-				resource: [
-					'transactions',
-				],
-				operation: [
-					'getTransactionByMonth',
-				]
-			}
-		}
-	},
-
-	{
-		displayName: 'Since',
-		name: 'since',
-		type: 'dateTime',
-		required: false,
-		default: '',
-		description: 'Fetch transactions only on or after provided date. Ignores time and only filters by the date.',
-		displayOptions: {
-			show: {
-				resource: [
-					'transactions',
-				],
-				operation: [
-					'listTransactions',
-					'getTransactionByCategory',
-					'getTransactionByPayee',
-				]
-			}
-		}
-	},
-
-
-	// CREATE / UPDATE SINGLE TRANSACTION
-
 
 	{
 		displayName: 'Amount',
@@ -178,10 +81,10 @@ export const transactionsFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: [
-					'transactions',
+					'scheduledTransactions',
 				],
 				operation: [
-					'createTransaction'
+					'createScheduledTransaction'
 				]
 			}
 		},
@@ -199,10 +102,10 @@ export const transactionsFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: [
-					'transactions',
+					'scheduledTransactions',
 				],
 				operation: [
-					'updateTransaction'
+					'updateScheduledTransaction'
 				]
 			}
 		},
@@ -217,10 +120,10 @@ export const transactionsFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: [
-					'transactions',
+					'scheduledTransactions',
 				],
 				operation: [
-					'createTransaction'
+					'createScheduledTransaction'
 				]
 			}
 		},
@@ -235,10 +138,10 @@ export const transactionsFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: [
-					'transactions',
+					'scheduledTransactions',
 				],
 				operation: [
-					'updateTransaction'
+					'updateScheduledTransaction'
 				]
 			}
 		},
@@ -254,10 +157,10 @@ export const transactionsFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: [
-					'transactions',
+					'scheduledTransactions',
 				],
 				operation: [
-					'createTransaction',
+					'createScheduledTransaction',
 				]
 			}
 		}
@@ -282,6 +185,79 @@ export const transactionsFields: INodeProperties[] = [
 	},
 
 	{
+		displayName: 'Frequency',
+		name: 'frequency',
+		type: 'options',
+		displayOptions: {
+			show: {
+				resource: [
+					'scheduledTransactions',
+				],
+				operation: [
+					'createScheduledTransaction',
+					'updateScheduledTransaction',
+				]
+			}
+		},
+		required: true,
+		options: [
+			{
+				name: 'Never',
+				value: 'never',
+			},
+			{
+				name: 'Daily',
+				value: 'daily',
+			},
+			{
+				name: 'Weekly',
+				value: 'weekly',
+			},
+			{
+				name: 'Every Other Week',
+				value: 'everyOtherWeek',
+			},
+			{
+				name: 'Twice a Month',
+				value: 'twiceAMonth',
+			},
+			{
+				name: 'Every 4 Weeks',
+				value: 'every4Weeks',
+			},
+			{
+				name: 'Monthly',
+				value: 'monthly',
+			},
+			{
+				name: 'Every Other Month',
+				value: 'everyOtherMonth',
+			},
+			{
+				name: 'Every 3 Months',
+				value: 'every3Months',
+			},
+			{
+				name: 'Every 4 Months',
+				value: 'every4Months',
+			},
+			{
+				name: 'Twice a Year',
+				value: 'twiceAYear',
+			},
+			{
+				name: 'Yearly',
+				value: 'yearly',
+			},
+			{
+				name: 'Every Other Year',
+				value: 'everyOtherYear',
+			},
+		],
+		default: 'never',
+	},
+
+	{
 		displayName: 'Additional Fields',
 		name: 'additionalFields',
 		type: 'collection',
@@ -290,10 +266,11 @@ export const transactionsFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: [
-					'transactions',
+					'scheduledTransactions',
 				],
 				operation: [
-					'createTransaction',
+					'createScheduledTransaction',
+					'editScheduledTransaction',
 				]
 			}
 		},
@@ -317,32 +294,10 @@ export const transactionsFields: INodeProperties[] = [
 			{
 				displayName: 'Category ID',
 				name: 'categoryId',
-				description: 'To configure a split transaction, leave Category ID empty and provide subtransactions under additional fields',
 				type: 'string',
 				required: false,
 				default: '',
 			},
-			{
-				displayName: 'Cleared',
-				name: 'cleared',
-				type: 'options',
-				options: [
-					{
-						name: 'Cleared',
-						value: 'cleared',
-					},
-					{
-						name: 'Uncleared',
-						value: 'uncleared',
-					},
-					{
-						name: 'Reconciled',
-						value: 'reconciled',
-					},
-				],
-				default: 'cleared',
-			},
-
 			{
 				displayName: 'Memo',
 				name: 'memo',
@@ -350,7 +305,6 @@ export const transactionsFields: INodeProperties[] = [
 				required: false,
 				default: '',
 			},
-
 			{
 				displayName: 'Sub Transactions',
 				name: 'subtransactions',
@@ -423,10 +377,10 @@ export const transactionsFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: [
-					'transactions',
+					'scheduledTransactions',
 				],
 				operation: [
-					'updateTransaction',
+					'updateScheduledTransaction',
 				]
 			}
 		},
@@ -450,32 +404,10 @@ export const transactionsFields: INodeProperties[] = [
 			{
 				displayName: 'Category ID',
 				name: 'categoryId',
-				description: 'To configure a split transaction, leave Category ID empty and provide subtransactions under additional fields',
 				type: 'string',
 				required: false,
 				default: '',
 			},
-			{
-				displayName: 'Cleared',
-				name: 'cleared',
-				type: 'options',
-				options: [
-					{
-						name: 'Cleared',
-						value: 'cleared',
-					},
-					{
-						name: 'Uncleared',
-						value: 'uncleared',
-					},
-					{
-						name: 'Reconciled',
-						value: 'reconciled',
-					},
-				],
-				default: 'cleared',
-			},
-
 			{
 				displayName: 'Memo',
 				name: 'memo',
@@ -483,7 +415,6 @@ export const transactionsFields: INodeProperties[] = [
 				required: false,
 				default: '',
 			},
-
 			{
 				displayName: 'Sub Transactions',
 				name: 'subtransactions',
@@ -514,7 +445,7 @@ export const transactionsFields: INodeProperties[] = [
 								displayName: 'Payee ID',
 								name: 'payee_id',
 								type: 'string',
-								required: true,
+								required: false,
 								default: '',
 							},
 							{
@@ -530,7 +461,7 @@ export const transactionsFields: INodeProperties[] = [
 								name: 'category_id',
 								description: 'The category for the subtransaction. Credit Card Payment categories are not permitted and will be ignored if supplied.',
 								type: 'string',
-								required: true,
+								required: false,
 								default: '',
 							},
 							{
@@ -546,147 +477,6 @@ export const transactionsFields: INodeProperties[] = [
 			},
 		],
 	},
-
-
-	//
-	// CREATE MULTIPLE TRANSACTIONS
-	//
-	{
-		displayName: 'Transactions JSON',
-		name: 'transactionsJson',
-		type: 'json',
-		default: '[\n  {\n    \"date\": \"2025-08-31\", // required\n    \"amount\": 0, // required\n    \"account_id\": \"account id\", // required \n    \"memo\": \"Memo text\",\n    \"cleared\": \"cleared\",\n    \"payee_id\": \"payee id\",\n    \"category_id\": \"category id\",\n    \"payee_name\": \"payee name\"\n  },\n  {\n    \"date\": \"2025-08-31\", \n    \"amount\": 0, \n    \"account_id\": \"account id\", \n    \"memo\": \"Memo text\",\n    \"cleared\": \"cleared\",\n    \"payee_id\": \"payee id\",\n    \"category_id\": \"category id\",\n    \"payee_name\": \"payee name\"\n  }\n]',
-		description: 'Custom JSON allows for batch creation',
-		displayOptions: {
-			show: {
-				resource: [
-					'transactions',
-				],
-				operation: [
-					'createTransactions',
-				]
-			}
-		},
-	},
-
-
-	//
-	// CREATE PROJECT
-	//
-	{
-		displayName: 'Project ID',
-		name: 'projectId',
-		type: 'string',
-		required: true,
-		default: '',
-		routing: {
-			request: {
-				method: 'DELETE',
-				url: '=/projects/{{$parameter.projectId}}'
-			},
-		},
-		displayOptions: {
-			show: {
-				resource: [
-					'project',
-				],
-				operation: [
-					'deleteProject'
-				]
-			}
-		},
-	},
-
-
-	//
-	//
-	//    LIST PROJECTS
-	//
-
-	{
-		displayName: 'Query',
-		name: 'query',
-		type: 'string',
-		description: 'Search by Address line 1 or Title',
-		default: '',
-		placeholder: '2600 Benjamin Franklin Pkwy',
-		routing: {
-			request: {
-				method: 'GET',
-				url: '=/projects/',
-				qs: {
-					'query': '={{ $value }}',
-					'page': 0,
-					'per_page': 30
-				}
-			},
-
-		},
-		displayOptions: {
-			show: {
-				resource: [
-					'project',
-				],
-				operation: [
-					'listProjects'
-				]
-			}
-		},
-	},
-
-	{
-		displayName: 'Additional Fields',
-		name: 'additionalFields',
-		type: 'collection',
-		default: {},
-		placeholder: 'Add Field',
-		displayOptions: {
-			show: {
-				resource: [
-					'project',
-				],
-				operation: [
-					'listProjects'
-				]
-			}
-		},
-		options: [
-			{
-				displayName: 'Page',
-				name: 'page',
-				type: 'string',
-				description: 'Page of result',
-				default: '',
-				routing: {
-					request: {
-						qs: {
-							'page': '={{ $value }}'
-						}
-					},
-
-				},
-
-			},
-
-			{
-				displayName: 'Per Page',
-				name: 'perPage',
-				type: 'string',
-				description: 'How many results per page',
-				default: '',
-				routing: {
-					request: {
-						qs: {
-							'per_page': '={{ $value }}'
-						}
-					},
-
-				},
-
-			},
-		]
-	},
-
 
 
 
