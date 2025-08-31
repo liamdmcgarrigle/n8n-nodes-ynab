@@ -27,7 +27,7 @@ export const resources = [
 	},
 	{
 		name: 'Payee Locations',
-		value: 'categories',
+		value: 'payeeLocations',
 		routing: {
 			request: {
 				url: '/payee_locations'
