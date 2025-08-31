@@ -6,11 +6,6 @@ export const resources = [
 	{
 		name: 'Accounts',
 		value: 'accounts',
-		routing: {
-			request: {
-				url: '/accounts'
-			}
-		}
 	},
 	{
 		name: 'Categories',

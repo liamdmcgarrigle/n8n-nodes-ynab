@@ -12,11 +12,6 @@ export const accountsOperations: INodeProperties[] = [
 				name: 'List Accounts',
 				value: 'listAccounts',
 				action: 'List accounts',
-				routing: {
-					request: {
-						url: "/accounts",
-				},
-		},
 			},
 			{
 				name: 'Get Account',
@@ -27,12 +22,6 @@ export const accountsOperations: INodeProperties[] = [
 				name: 'Create Account',
 				value: 'createAccount',
 				action: 'Create account',
-				routing: {
-					request: {
-						method: 'POST',
-						url: "/accounts",
-					},
-				},
 			},
 		],
 		default: 'listAccounts',
@@ -58,11 +47,11 @@ export const accountsFields: INodeProperties[] = [
 		type: 'string',
 		required: true,
 		default: '',
-		routing: {
-			request: {
-				url: "=/accounts/{{$parameter.accountId}}",
-			},
-		},
+		// routing: {
+		// 	request: {
+		// 		url: "=/accounts/{{$parameter.accountId}}",
+		// 	},
+		// },
 		displayOptions: {
 			show: {
 				resource: [
@@ -86,15 +75,15 @@ export const accountsFields: INodeProperties[] = [
 		type: 'string',
 		required: true,
 		default: '',
-		routing: {
-			request: {
-				body: {
-					"account": {
-						"name":'={{$parameter.accountName}}',
-						}
-				}
-			},
-		},
+		// routing: {
+		// 	request: {
+			// 	body: {
+			// 		"account": {
+			// 			"name":'={{$parameter.accountName}}',
+			// 			}
+			// 	}
+			// },
+		// },
 		displayOptions: {
 			show: {
 				resource: [
@@ -125,15 +114,6 @@ export const accountsFields: INodeProperties[] = [
 					'createAccount'
 				]
 			}
-		},
-		routing: {
-			request: {
-				body: {
-					"account": {
-						"balance":'={{ $parameter.balance * 1000 }}',
-						}
-				}
-			},
 		},
 	},
 	{
@@ -205,15 +185,15 @@ export const accountsFields: INodeProperties[] = [
 				]
 			}
 		},
-		routing: {
-			request: {
-				body:{
-					"account": {
-						"type":"={{$parameter.accountType}}"
-					}
-				}
-			}
-		}
+		// routing: {
+		// 	request: {
+		// 		body:{
+		// 			"account": {
+		// 				"type":"={{$parameter.accountType}}"
+		// 			}
+		// 		}
+		// 	}
+		// }
 	},
 
 ]
