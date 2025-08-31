@@ -6,20 +6,15 @@ export const resources = [
 	{
 		name: 'Accounts',
 		value: 'accounts',
-		// routing: {
-		// 	request: {
-		// 		url: '/accounts'
-		// 	}
-		// }
+		routing: {
+			request: {
+				url: '/accounts'
+			}
+		}
 	},
 	{
 		name: 'Categories',
 		value: 'categories',
-		routing: {
-			request: {
-				url: '/categories'
-			}
-		}
 	},
 	{
 		name: 'Payees',
