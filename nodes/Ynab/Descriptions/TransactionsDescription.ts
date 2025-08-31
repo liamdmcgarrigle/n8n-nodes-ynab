@@ -1,0 +1,546 @@
+import { INodeProperties } from "n8n-workflow";
+
+export const transactionsOperations: INodeProperties[] = [
+	{
+		displayName: 'Operation',
+		name: 'operation',
+		type: 'options',
+		noDataExpression: true,
+		// eslint-disable-next-line n8n-nodes-base/node-param-options-type-unsorted-items
+		options: [
+			{
+				name: 'List Transactions',
+				value: 'listTransactions',
+				action: 'List transactions',
+			},
+			{
+				name: 'Get Transaction',
+				value: 'getTransaction',
+				action: 'Get transaction',
+			},
+			{
+				name: 'Get Transaction by Category',
+				value: 'getTransactionByCategory',
+				action: 'Get transaction by category',
+			},
+			{
+				name: 'Get Transaction by Payee',
+				value: 'getTransactionByPayee',
+				action: 'Get transaction by payee',
+			},
+			{
+				name: 'Get Transaction by Month',
+				value: 'getTransactionByMonth',
+				action: 'Get transaction by month',
+			},
+			{
+				name: 'Create Transaction',
+				value: 'createTransaction',
+				action: 'Create transaction',
+			},
+			{
+				name: 'Create Transactions',
+				value: 'createTransactions',
+				action: 'Create transactions',
+			},
+			{
+				name: 'Update Transaction',
+				value: 'updateTransaction',
+				action: 'Update transaction',
+			},
+			{
+				name: 'Update Transactions',
+				value: 'updateTransactions',
+				action: 'Update transactions',
+			},
+			{
+				name: 'Delete Transaction',
+				value: 'deleteTransaction',
+				action: 'Delete transaction',
+			},
+		],
+		default: 'listTransactions',
+		displayOptions: {
+			show: {
+				resource: [
+					'transactions',
+				]
+			},
+		},
+	},
+]
+
+
+export const transactionsFields: INodeProperties[] = [
+
+	{
+		displayName: 'Transaction ID',
+		name: 'transactionId',
+		type: 'string',
+		required: true,
+		default: '',
+		displayOptions: {
+			show: {
+				resource: [
+					'transactions',
+				],
+				operation: [
+					'getTransaction',
+					'updateTransaction',
+					'deleteTransaction',
+				]
+			}
+		},
+	},
+	{
+		displayName: 'Category ID',
+		name: 'categoryId',
+		type: 'string',
+		required: true,
+		default: '',
+		displayOptions: {
+			show: {
+				resource: [
+					'transactions',
+				],
+				operation: [
+					'getTransactionByCategory',
+				]
+			}
+		},
+	},
+	{
+		displayName: 'Payee ID',
+		name: 'payeeId',
+		type: 'string',
+		required: true,
+		default: '',
+		displayOptions: {
+			show: {
+				resource: [
+					'transactions',
+				],
+				operation: [
+					'getTransactionByPayee',
+				]
+			}
+		},
+	},
+	{
+		displayName: 'Month',
+		name: 'month',
+		type: 'dateTime',
+		required: true,
+		default: '',
+		description: 'Only the year & month is used',
+		displayOptions: {
+			show: {
+				resource: [
+					'transactions',
+				],
+				operation: [
+					'getTransactionByMonth',
+				]
+			}
+		}
+	},
+
+	{
+		displayName: 'Since',
+		name: 'since',
+		type: 'dateTime',
+		required: false,
+		default: '',
+		description: 'Fetch transactions only on or after provided date. Ignores time and only filters by the date.',
+		displayOptions: {
+			show: {
+				resource: [
+					'transactions',
+				],
+				operation: [
+					'listTransactions',
+					'getTransactionByCategory',
+					'getTransactionByPayee',
+				]
+			}
+		}
+	},
+
+
+	// CREATE / UPDATE SINGLE TRANSACTION
+
+
+	{
+		displayName: 'Amount',
+		name: 'amount',
+		type: 'number',
+		description: "Amount of the transaction",
+		required: true,
+		typeOptions: {
+			numberPrecision: 2,
+		},
+		default: 0.00,
+		displayOptions: {
+			show: {
+				resource: [
+					'transactions',
+				],
+				operation: [
+					'createTransaction'
+				]
+			}
+		},
+	},
+	{
+		displayName: 'Amount',
+		name: 'amount',
+		type: 'number',
+		description: "Amount of the transaction",
+		required: false,
+		typeOptions: {
+			numberPrecision: 2,
+		},
+		default: null,
+		displayOptions: {
+			show: {
+				resource: [
+					'transaction',
+				],
+				operation: [
+					'updateTransaction'
+				]
+			}
+		},
+	},
+	{
+		displayName: 'Account ID',
+		name: 'accountId',
+		type: 'string',
+		description: "Account used for the transaction",
+		required: true,
+		default: '',
+		displayOptions: {
+			show: {
+				resource: [
+					'transactions',
+				],
+				operation: [
+					'createTransaction'
+				]
+			}
+		},
+	},
+	{
+		displayName: 'Account ID',
+		name: 'accountId',
+		type: 'string',
+		description: "Account used for the transaction",
+		required: false,
+		default: '',
+		displayOptions: {
+			show: {
+				resource: [
+					'transactions',
+				],
+				operation: [
+					'updateTransaction'
+				]
+			}
+		},
+	},
+
+	{
+		displayName: 'Date',
+		name: 'date',
+		type: 'dateTime',
+		required: true,
+		default: '',
+		description: 'Date of transaction. Can not be in the future.',
+		displayOptions: {
+			show: {
+				resource: [
+					'transactions',
+				],
+				operation: [
+					'createTransaction',
+				]
+			}
+		}
+	},
+	{
+		displayName: 'Date',
+		name: 'date',
+		type: 'dateTime',
+		required: false,
+		default: '',
+		description: 'Date of transaction. Can not be in the future.',
+		displayOptions: {
+			show: {
+				resource: [
+					'transactions',
+				],
+				operation: [
+					'updateTransaction',
+				]
+			}
+		}
+	},
+
+	{
+		displayName: 'Additional Fields',
+		name: 'additionalFields',
+		type: 'collection',
+		default: {},
+		placeholder: 'Add Field',
+		displayOptions: {
+			show: {
+				resource: [
+					'transactions',
+				],
+				operation: [
+					'createTransaction',
+					'updateTransaction',
+				]
+			}
+		},
+		options: [
+
+			{
+				displayName: 'Payee ID',
+				name: 'payeeId',
+				type: 'string',
+				required: false,
+				default: '',
+			},
+			{
+				displayName: 'Payee Name',
+				name: 'payeeName',
+				description: 'If a payee name value is provided and payee id has a null value, the payee name value will be used to resolve the payee by either (1) a payee with the same name or (2) creation of a new payee.',
+				type: 'string',
+				required: false,
+				default: '',
+			},
+			{
+				displayName: 'Category ID',
+				name: 'categoryId',
+				description: 'To configure a split transaction, leave Category ID empty and provide subtransactions under additional fields',
+				type: 'string',
+				required: false,
+				default: '',
+			},
+			{
+				displayName: 'Cleared',
+				name: 'cleared',
+				type: 'options',
+				options: [
+					{
+						name: 'Cleared',
+						value: 'cleared',
+					},
+					{
+						name: 'Uncleared',
+						value: 'uncleared',
+					},
+					{
+						name: 'Reconciled',
+						value: 'reconciled',
+					},
+				],
+				default: 'cleared',
+			},
+
+			{
+				displayName: 'Memo',
+				name: 'memo',
+				type: 'string',
+				required: false,
+				default: '',
+			},
+
+			{
+				displayName: 'Sub Transactions',
+				name: 'subtransactions',
+				placeholder: 'Add Sub Transaction',
+				type: 'fixedCollection',
+				default: {},
+				description: 'Sum of subtransaction amounts MUST equal Amount. Otherwise subtransactions will be ignored by the API.',
+				typeOptions: {
+					multipleValues: true,
+				},
+				options: [
+					{
+						name: 'subtransactionFields',
+						displayName: 'Sub Transaction',
+						values: [
+							{
+								displayName: 'Amount',
+								name: 'amount',
+								type: 'number',
+								description: "Amount of the transaction",
+								required: true,
+								typeOptions: {
+									numberPrecision: 2,
+								},
+								default: 0.00,
+							},
+							{
+								displayName: 'Payee ID',
+								name: 'payeeId',
+								type: 'string',
+								required: false,
+								default: '',
+							},
+							{
+								displayName: 'Payee Name',
+								name: 'payeeName',
+								description: 'If a payee name value is provided and payee id has a null value, the payee name value will be used to resolve the payee by either (1) a payee with the same name or (2) creation of a new payee.',
+								type: 'string',
+								required: false,
+								default: '',
+							},
+							{
+								displayName: 'Category ID',
+								name: 'categoryId',
+								description: 'The category for the subtransaction. Credit Card Payment categories are not permitted and will be ignored if supplied.',
+								type: 'string',
+								required: false,
+								default: '',
+							},
+							{
+								displayName: 'Memo',
+								name: 'memo',
+								type: 'string',
+								required: false,
+								default: '',
+							},
+						],
+					},
+				],
+			},
+		],
+	},
+
+	//
+	// CREATE PROJECT
+	//
+	{
+		displayName: 'Project ID',
+		name: 'projectId',
+		type: 'string',
+		required: true,
+		default: '',
+		routing: {
+			request: {
+				method: 'DELETE',
+				url: '=/projects/{{$parameter.projectId}}'
+			},
+		},
+		displayOptions: {
+			show: {
+				resource: [
+					'project',
+				],
+				operation: [
+					'deleteProject'
+				]
+			}
+		},
+	},
+
+
+	//
+	//
+	//    LIST PROJECTS
+	//
+
+	{
+		displayName: 'Query',
+		name: 'query',
+		type: 'string',
+		description: 'Search by Address line 1 or Title',
+		default: '',
+		placeholder: '2600 Benjamin Franklin Pkwy',
+		routing: {
+			request: {
+				method: 'GET',
+				url: '=/projects/',
+				qs: {
+					'query': '={{ $value }}',
+					'page': 0,
+					'per_page': 30
+				}
+			},
+
+		},
+		displayOptions: {
+			show: {
+				resource: [
+					'project',
+				],
+				operation: [
+					'listProjects'
+				]
+			}
+		},
+	},
+
+	{
+		displayName: 'Additional Fields',
+		name: 'additionalFields',
+		type: 'collection',
+		default: {},
+		placeholder: 'Add Field',
+		displayOptions: {
+			show: {
+				resource: [
+					'project',
+				],
+				operation: [
+					'listProjects'
+				]
+			}
+		},
+		options: [
+			{
+				displayName: 'Page',
+				name: 'page',
+				type: 'string',
+				description: 'Page of result',
+				default: '',
+				routing: {
+					request: {
+						qs: {
+							'page': '={{ $value }}'
+						}
+					},
+
+				},
+
+			},
+
+			{
+				displayName: 'Per Page',
+				name: 'perPage',
+				type: 'string',
+				description: 'How many results per page',
+				default: '',
+				routing: {
+					request: {
+						qs: {
+							'per_page': '={{ $value }}'
+						}
+					},
+
+				},
+
+			},
+		]
+	},
+
+
+
+
+
+
+
+]

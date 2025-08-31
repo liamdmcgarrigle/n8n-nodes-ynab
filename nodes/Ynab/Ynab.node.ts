@@ -8,6 +8,7 @@ import {
     NodeConnectionType,
     NodeOperationError,
 } from 'n8n-workflow';
+import { DateTime } from 'luxon';
 // import { projectFields, projectOperations } from './Descriptions/ProjectDescription';
 // import { notBuildNotice } from './NotBuiltYetNotice';
 // import { projectPhotoFields, projectPhotoOperations } from './Descriptions/ProjectPhotoDescription';
@@ -24,6 +25,9 @@ import { accountsFields, accountsOperations } from './Descriptions/accountsDescr
 import { categoryFields, categoryOperations } from './Descriptions/categoryDescription';
 import { getBugdetId } from './untils';
 import { payeeFields, payeeOperations } from './Descriptions/payeeDescription';
+import { payeeLocationsFields, payeeLocationsOperations } from './Descriptions/PayeeLocationsDescription';
+import { monethsFields, monthsOperations } from './Descriptions/MonthsDescription';
+import { transactionsFields, transactionsOperations } from './Descriptions/TransactionsDescription';
 
 export class Ynab implements INodeType {
 	description: INodeTypeDescription = {
@@ -76,6 +80,16 @@ export class Ynab implements INodeType {
 
 			...payeeOperations,
 			...payeeFields,
+
+			...payeeLocationsOperations,
+			...payeeLocationsFields,
+
+			...monthsOperations,
+			...monethsFields,
+
+			...transactionsOperations,
+			...transactionsFields,
+
 
 			// ...projectOperations,
 			// ...projectFields,
@@ -322,7 +336,7 @@ export class Ynab implements INodeType {
 					if( this.getNodeParameter('resource', 0) === 'payees' ) {
 
 					// ------------------------------------------------------------------
-					// ---------------------- CATEGORY OPERATIONS ----------------------
+					// ---------------------- PAYEE OPERATIONS ----------------------
 					// ------------------------------------------------------------------
 						if( this.getNodeParameter('operation', 0) === 'listPayees' ) {
 
@@ -391,6 +405,369 @@ export class Ynab implements INodeType {
 						}
 
 					} // end of payee resourse
+
+					if( this.getNodeParameter('resource', 0) === 'payeeLocations' ) {
+
+
+					// ------------------------------------------------------------------
+					// ---------------------- PAYEE LOCATIONS OPERATIONS ----------------------
+					// ------------------------------------------------------------------
+						if( this.getNodeParameter('operation', 0) === 'listPayeesLocations' ) {
+
+
+							const options: IHttpRequestOptions = {
+								url: `${baseUrl}/payee_locations`,
+								method: 'GET',
+							};
+
+							const response = await this.helpers.httpRequestWithAuthentication.call(
+								this,
+								'YnabApi',
+								options,
+							);
+
+							item.json = response['data']['payee_locations'];
+						}
+
+						if( this.getNodeParameter('operation', 0) === 'getLocationById' ) {
+
+							const locationId = this.getNodeParameter('locationId', itemIndex, '') as string;
+
+
+							const options: IHttpRequestOptions = {
+								url: `${baseUrl}/payee_locations/${locationId}`,
+								method: 'GET',
+							};
+
+							const response = await this.helpers.httpRequestWithAuthentication.call(
+								this,
+								'YnabApi',
+								options,
+							);
+
+							item.json = response['data'];
+						}
+
+
+						if( this.getNodeParameter('operation', 0) === 'getLocationByPayee' ) {
+
+							const payeeId = this.getNodeParameter('payeeId', itemIndex, '') as string;
+
+
+							const options: IHttpRequestOptions = {
+								url: `${baseUrl}/payees/${payeeId}/payee_locations`,
+								method: 'GET',
+							};
+
+							const response = await this.helpers.httpRequestWithAuthentication.call(
+								this,
+								'YnabApi',
+								options,
+							);
+
+							item.json = response['data'];
+						}
+
+					} // end of payee locatiosn resourse
+
+
+					if( this.getNodeParameter('resource', 0) === 'months' ) {
+
+
+					// ------------------------------------------------------------------
+					// ---------------------- MONTHS OPERATIONS ----------------------
+					// ------------------------------------------------------------------
+						if( this.getNodeParameter('operation', 0) === 'listMonths' ) {
+
+
+							const options: IHttpRequestOptions = {
+								url: `${baseUrl}/months`,
+								method: 'GET',
+							};
+
+							const response = await this.helpers.httpRequestWithAuthentication.call(
+								this,
+								'YnabApi',
+								options,
+							);
+
+							item.json = response['data'];
+						}
+
+						if( this.getNodeParameter('operation', 0) === 'getMonth' ) {
+
+							// This endpoint is picky about the format being exact
+							// so im extracting the yyyy-MM then adding in the '-01'
+							const inputDate = this.getNodeParameter('month', itemIndex, '') as string;
+							const date = DateTime.fromISO(inputDate).toFormat('yyyy-MM');
+
+
+							const options: IHttpRequestOptions = {
+								url: `${baseUrl}/months/${date}-01`,
+								method: 'GET',
+							};
+
+							const response = await this.helpers.httpRequestWithAuthentication.call(
+								this,
+								'YnabApi',
+								options,
+							);
+
+							item.json = response['data']['month'];
+						}
+
+
+						if( this.getNodeParameter('operation', 0) === 'getLocationByPayee' ) {
+
+							const payeeId = this.getNodeParameter('payeeId', itemIndex, '') as string;
+
+
+							const options: IHttpRequestOptions = {
+								url: `${baseUrl}/payees/${payeeId}/payee_locations`,
+								method: 'GET',
+							};
+
+							const response = await this.helpers.httpRequestWithAuthentication.call(
+								this,
+								'YnabApi',
+								options,
+							);
+
+							item.json = response['data'];
+						}
+
+					} // end of month resourse
+
+					if( this.getNodeParameter('resource', 0) === 'transactions' ) {
+
+
+					// ------------------------------------------------------------------
+					// ---------------------- TRANSACTIONS OPERATIONS ----------------------
+					// ------------------------------------------------------------------
+						if( this.getNodeParameter('operation', 0) === 'listTransactions' ) {
+
+							const since = this.getNodeParameter('since', itemIndex, '') as string;
+							const sinceDate = DateTime.fromISO(since).toFormat('yyyy-MM-dd');
+
+
+							const options: IHttpRequestOptions = {
+								url: `${baseUrl}/transactions`,
+								method: 'GET',
+							};
+
+							if (since) {
+								options.qs = {'since_date': sinceDate };
+							}
+
+							const response = await this.helpers.httpRequestWithAuthentication.call(
+								this,
+								'YnabApi',
+								options,
+							);
+
+							item.json = response['data'];
+						}
+
+						if( this.getNodeParameter('operation', 0) === 'getTransaction' ) {
+
+							const transactionId = this.getNodeParameter('transactionId', itemIndex, '') as string;
+
+
+							const options: IHttpRequestOptions = {
+								url: `${baseUrl}/transactions/${transactionId}`,
+								method: 'GET',
+							};
+
+							const response = await this.helpers.httpRequestWithAuthentication.call(
+								this,
+								'YnabApi',
+								options,
+							);
+
+							item.json = response['data']['transaction'];
+						}
+
+						if( this.getNodeParameter('operation', 0) === 'getTransactionByCategory' ) {
+
+							const since = this.getNodeParameter('since', itemIndex, '') as string;
+							const sinceDate = DateTime.fromISO(since).toFormat('yyyy-MM-dd');
+
+							const categoryId = this.getNodeParameter('categoryId', itemIndex, '') as string;
+
+
+							const options: IHttpRequestOptions = {
+								url: `${baseUrl}/categories/${categoryId}/transactions`,
+								method: 'GET',
+							};
+
+							if (since) {
+								options.qs = {'since_date': sinceDate };
+							}
+
+							const response = await this.helpers.httpRequestWithAuthentication.call(
+								this,
+								'YnabApi',
+								options,
+							);
+
+							item.json = response['data'];
+						}
+
+						if( this.getNodeParameter('operation', 0) === 'getTransactionByPayee' ) {
+
+							const since = this.getNodeParameter('since', itemIndex, '') as string;
+							const sinceDate = DateTime.fromISO(since).toFormat('yyyy-MM-dd');
+
+							const payeeId = this.getNodeParameter('payeeId', itemIndex, '') as string;
+
+
+							const options: IHttpRequestOptions = {
+								url: `${baseUrl}/payees/${payeeId}/transactions`,
+								method: 'GET',
+							};
+
+							if (since) {
+								options.qs = {'since_date': sinceDate };
+							}
+
+							const response = await this.helpers.httpRequestWithAuthentication.call(
+								this,
+								'YnabApi',
+								options,
+							);
+
+							item.json = response['data'];
+						}
+
+						if( this.getNodeParameter('operation', 0) === 'getTransactionByMonth' ) {
+
+							const inputDate = this.getNodeParameter('month', itemIndex, '') as string;
+							const date = DateTime.fromISO(inputDate).toFormat('yyyy-MM');
+
+
+							const options: IHttpRequestOptions = {
+								url: `${baseUrl}/months/${date}-01/transactions`,
+								method: 'GET',
+							};
+
+							const response = await this.helpers.httpRequestWithAuthentication.call(
+								this,
+								'YnabApi',
+								options,
+							);
+
+							item.json = response['data'];
+						}
+
+						if( this.getNodeParameter('operation', 0) === 'getLocationByPayee' ) {
+
+							const payeeId = this.getNodeParameter('payeeId', itemIndex, '') as string;
+
+
+							const options: IHttpRequestOptions = {
+								url: `${baseUrl}/payees/${payeeId}/payee_locations`,
+								method: 'GET',
+							};
+
+							const response = await this.helpers.httpRequestWithAuthentication.call(
+								this,
+								'YnabApi',
+								options,
+							);
+
+							item.json = response['data'];
+						}
+
+						if( this.getNodeParameter('operation', 0) === 'createTransaction' ) {
+
+
+							const amount = (this.getNodeParameter('amount', itemIndex, '') as number) * 1_000;
+							const accountId = this.getNodeParameter('accountId', itemIndex, '') as string;
+
+
+							const inputDate = this.getNodeParameter('date', itemIndex, '') as string;
+							const date = DateTime.fromISO(inputDate).toFormat('yyyy-MM-dd');
+
+							const additionalFields = this.getNodeParameter('additionalFields', itemIndex) as IDataObject; // gets values under additionalFields
+							const subtransactions = (additionalFields.subtransactions as any)?.subtransactionFields as any;
+							subtransactions?.map((i: { amount: number; }) => i.amount = i.amount * 1_000 );
+							const payeeId = additionalFields.payeeId;
+							const payeeName = additionalFields.payeeName;
+							const categoryId = additionalFields.categoryId;
+							const memo = additionalFields.memo;
+							const cleared = additionalFields.cleared;
+
+							const body: any = {
+								transaction: {
+									date: date,
+									account_id: accountId,
+								}
+							}
+
+							if (amount) {
+								body.transaction.amount = amount;
+							}
+
+							if (payeeId) {
+								body.transaction.payee_id = payeeId;
+							}
+
+							if (payeeName) {
+								body.transaction.payee_name = payeeName;
+							}
+
+							if (categoryId) {
+								body.transaction.category_id = categoryId;
+							}
+
+							if (memo) {
+								body.transaction.memo = memo;
+							}
+
+							if (cleared) {
+								body.transaction.cleared = cleared;
+							}
+
+							if (subtransactions) {
+								body.transaction.subtransactions = subtransactions;
+							}
+
+
+							const options: IHttpRequestOptions = {
+								url: `${baseUrl}/transactions`,
+								method: 'POST',
+								body: body,
+							};
+
+							const response = await this.helpers.httpRequestWithAuthentication.call(
+								this,
+								'YnabApi',
+								options,
+							);
+
+							item.json = response['data']['transaction'];
+						}
+
+						if( this.getNodeParameter('operation', 0) === 'getLocationByPayee' ) {
+
+							const payeeId = this.getNodeParameter('payeeId', itemIndex, '') as string;
+
+
+							const options: IHttpRequestOptions = {
+								url: `${baseUrl}/payees/${payeeId}/payee_locations`,
+								method: 'GET',
+							};
+
+							const response = await this.helpers.httpRequestWithAuthentication.call(
+								this,
+								'YnabApi',
+								options,
+							);
+
+							item.json = response['data'];
+						}
+
+					} // end of transaction resourse
 
 
 				} catch (error) {

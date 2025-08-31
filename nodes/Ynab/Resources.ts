@@ -14,55 +14,21 @@ export const resources = [
 	{
 		name: 'Payees',
 		value: 'payees',
-		routing: {
-			request: {
-				url: '/payees'
-			}
-		}
 	},
 	{
 		name: 'Payee Locations',
 		value: 'payeeLocations',
-		routing: {
-			request: {
-				url: '/payee_locations'
-			}
-		}
 	},
 	{
 		name: 'Months',
 		value: 'months',
-		routing: {
-			request: {
-				url: '/months'
-			}
-		}
 	},
 	{
 		name: 'Transactions',
 		value: 'transactions',
-		routing: {
-			request: {
-				url: '/transactions'
-			}
-		}
-	},
-	{
-		name: 'Transactions',
-		value: 'transactions',
-		routing: {
-			request: {
-				url: '/transactions'
-			}
-		}
 	},
 	{
 		name: 'Scheduled Transactions',
 		value: 'scheduledTransactions',
-		routing: {
-			request: {
-				url: '/scheduled_transactions'
-			}
-		}
 	},
 ]
