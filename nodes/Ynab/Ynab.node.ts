@@ -15,6 +15,7 @@ import { resources } from './Resources';
 // import { groupOperations } from './Descriptions/groupDescription';
 // import { otherOperations } from './Descriptions/otherDescription';
 import { budgetOperations } from './Descriptions/BudgetDescription';
+import { accountsFields, accountsOperations } from './Descriptions/accountsDescription';
 
 export class Ynab implements INodeType {
 	description: INodeTypeDescription = {
@@ -58,6 +59,12 @@ export class Ynab implements INodeType {
 			},
 
 			...budgetOperations,
+
+			...accountsOperations,
+			...accountsFields,
+
+
+
 
 			// ...projectOperations,
 			// ...projectFields,
