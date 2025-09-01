@@ -4,7 +4,7 @@ I created this node for personal use.
 While I am currently an employee of n8n, this is an unofficial node I built in my own time. 
 I have no affiliation with YNAB beyond being a user.
 
-Haven't heard of YNAB? (Check it out here)[https://ynab.com].
+Haven't heard of YNAB? [Check it out here](https://ynab.com).
 
 # Bugs/Contributing/Feature Request
 
