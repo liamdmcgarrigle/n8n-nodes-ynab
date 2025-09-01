@@ -11,10 +11,10 @@ import {
 import { DateTime } from 'luxon';
 import { resources } from './Resources';
 import { budgetOperations } from './Descriptions/BudgetDescription';
-import { accountsFields, accountsOperations } from './Descriptions/accountsDescription';
-import { categoryFields, categoryOperations } from './Descriptions/categoryDescription';
+import { accountsFields, accountsOperations } from './Descriptions/AccountsDescription';
+import { categoryFields, categoryOperations } from './Descriptions/CategoryDescription';
 import { getBugdetId } from './untils';
-import { payeeFields, payeeOperations } from './Descriptions/payeeDescription';
+import { payeeFields, payeeOperations } from './Descriptions/PayeeDescription';
 import { payeeLocationsFields, payeeLocationsOperations } from './Descriptions/PayeeLocationsDescription';
 import { monethsFields, monthsOperations } from './Descriptions/MonthsDescription';
 import { transactionsFields, transactionsOperations } from './Descriptions/TransactionsDescription';

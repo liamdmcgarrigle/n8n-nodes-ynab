@@ -21,13 +21,17 @@ This can only be installed if you are self-hosting n8n or if this node becomes a
 Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes/installation/) in the n8n community nodes documentation.
 
 ## Operations
+It should be pretty self explainitory. 
 
-Here is a list of all of the currently built operations in the you need a budget n8n node.
-
-Resourse
-- operations
-- TODO
+If you get stuck, try checking out the YNAB api [docs](https://api.ynab.com/) and [refrence](https://api.ynab.com/v1#/) since this node is just a thin layer ontop of the API.
 
 ## Credentials
 
-TODO: Add docs for how to authenticate
+You need a personal access token and your budget ID to authenticate with this node.
+
+[This](https://api.ynab.com/#personal-access-tokens) will tell you how to create an access token in YNAB.
+
+And the budget ID will be in this spot on your URL when you are on the webapp. 
+![screenshot of id](/readmefiles/budget-id.png)
+
+You will need to make a credential per budget if you work with multiple budgets
