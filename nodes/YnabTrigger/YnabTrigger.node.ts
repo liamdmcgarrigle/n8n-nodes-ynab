@@ -49,7 +49,7 @@ async function apiRequest(
 export class YnabTrigger implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'YNAB Trigger',
-		name: 'YnabTrigger',
+		name: 'ynabTrigger',
 		icon: 'file:ynabLogo.svg',
 		group: ['trigger'],
 		version: 1,
@@ -67,6 +67,7 @@ export class YnabTrigger implements INodeType {
 				type: 'options',
 				default: 'transactionAdded',
 				required: true,
+				// eslint-disable-next-line n8n-nodes-base/node-param-options-type-unsorted-items
 				options: [
 					{ name: 'Transaction Added', value: 'transactionAdded', description: 'New transaction created' },
 					{ name: 'Transaction Updated', value: 'transactionUpdated', description: 'Existing transaction changed' },
@@ -83,30 +84,31 @@ export class YnabTrigger implements INodeType {
 				placeholder: 'Add Filter',
 				default: {},
 				displayOptions: { show: { event: ['transactionAdded', 'transactionUpdated'] } },
+				// eslint-disable-next-line n8n-nodes-base/node-param-collection-type-unsorted-items
 				options: [
 					{
-						displayName: 'Account',
+						displayName: 'Account Name or ID',
 						name: 'accountId',
 						type: 'options',
 						typeOptions: { loadOptionsMethod: 'getAccounts' },
 						default: '',
-						description: 'Only monitor transactions from this account',
+						description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
 					},
 					{
-						displayName: 'Category',
+						displayName: 'Category Name or ID',
 						name: 'categoryId',
 						type: 'options',
 						typeOptions: { loadOptionsMethod: 'getCategories' },
 						default: '',
-						description: 'Only monitor transactions in this category',
+						description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
 					},
 					{
-						displayName: 'Payee',
+						displayName: 'Payee Name or ID',
 						name: 'payeeId',
 						type: 'options',
 						typeOptions: { loadOptionsMethod: 'getPayees' },
 						default: '',
-						description: 'Only monitor transactions from this payee',
+						description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
 					},
 					{
 						displayName: 'Minimum Amount',
@@ -144,19 +146,19 @@ export class YnabTrigger implements INodeType {
 				default: {},
 				options: [
 					{
-						displayName: 'Include Subtransactions',
+						displayName: 'Whether Subtransactions Are Included',
 						name: 'includeSubtransactions',
 						type: 'boolean',
 						default: false,
-						description: 'Include subtransactions for splits',
+						description: 'Whether to include subtransactions for splits',
 						displayOptions: { show: { '/event': ['transactionAdded', 'transactionUpdated'] } },
 					},
 					{
-						displayName: 'Include Deleted',
+						displayName: 'Whether Deleted Are Included',
 						name: 'includeDeleted',
 						type: 'boolean',
 						default: false,
-						description: 'Trigger for deleted items too',
+						description: 'Whether to trigger for deleted items too',
 					},
 				],
 			},

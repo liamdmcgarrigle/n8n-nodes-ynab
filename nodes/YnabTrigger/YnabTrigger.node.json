@@ -1,5 +1,5 @@
 {
-	"node": "n8n-nodes-base.YnabTrigger",
+	"node": "n8n-nodes-base.ynabTrigger",
 	"codexVersion": "1.0",
 	"categories": [
 		"Finance & Accounting"

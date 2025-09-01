@@ -94,7 +94,6 @@ export const scheduledTransactionsFields: INodeProperties[] = [
 		name: 'amount',
 		type: 'number',
 		description: "Amount of the transaction",
-		required: false,
 		typeOptions: {
 			numberPrecision: 2,
 		},
@@ -133,7 +132,6 @@ export const scheduledTransactionsFields: INodeProperties[] = [
 		name: 'accountId',
 		type: 'string',
 		description: "Account used for the transaction",
-		required: false,
 		default: '',
 		displayOptions: {
 			show: {
@@ -169,7 +167,6 @@ export const scheduledTransactionsFields: INodeProperties[] = [
 		displayName: 'Date',
 		name: 'date',
 		type: 'dateTime',
-		required: false,
 		default: '',
 		description: 'Date of transaction. Can not be in the future.',
 		displayOptions: {
@@ -200,6 +197,7 @@ export const scheduledTransactionsFields: INodeProperties[] = [
 			}
 		},
 		required: true,
+		// eslint-disable-next-line n8n-nodes-base/node-param-options-type-unsorted-items
 		options: [
 			{
 				name: 'Never',
@@ -274,35 +272,31 @@ export const scheduledTransactionsFields: INodeProperties[] = [
 				]
 			}
 		},
+		// eslint-disable-next-line n8n-nodes-base/node-param-collection-type-unsorted-items
 		options: [
-
 			{
 				displayName: 'Payee ID',
 				name: 'payeeId',
 				type: 'string',
-				required: false,
 				default: '',
 			},
 			{
 				displayName: 'Payee Name',
 				name: 'payeeName',
-				description: 'If a payee name value is provided and payee id has a null value, the payee name value will be used to resolve the payee by either (1) a payee with the same name or (2) creation of a new payee.',
+				description: 'If a payee name value is provided and payee ID has a null value, the payee name value will be used to resolve the payee by either (1) a payee with the same name or (2) creation of a new payee',
 				type: 'string',
-				required: false,
 				default: '',
 			},
 			{
 				displayName: 'Category ID',
 				name: 'categoryId',
 				type: 'string',
-				required: false,
 				default: '',
 			},
 			{
 				displayName: 'Memo',
 				name: 'memo',
 				type: 'string',
-				required: false,
 				default: '',
 			},
 			{
@@ -315,10 +309,12 @@ export const scheduledTransactionsFields: INodeProperties[] = [
 				typeOptions: {
 					multipleValues: true,
 				},
+				// eslint-disable-next-line n8n-nodes-base/node-param-collection-type-unsorted-items
 				options: [
 					{
 						name: 'subtransactionFields',
 						displayName: 'Sub Transaction',
+						// eslint-disable-next-line n8n-nodes-base/node-param-fixed-collection-type-unsorted-items
 						values: [
 							{
 								displayName: 'Amount',
@@ -335,15 +331,13 @@ export const scheduledTransactionsFields: INodeProperties[] = [
 								displayName: 'Payee ID',
 								name: 'payee_id',
 								type: 'string',
-								required: false,
 								default: '',
 							},
 							{
 								displayName: 'Payee Name',
 								name: 'payee_name',
-								description: 'If a payee name value is provided and payee id has a null value, the payee name value will be used to resolve the payee by either (1) a payee with the same name or (2) creation of a new payee.',
+								description: 'If a payee name value is provided and payee ID has a null value, the payee name value will be used to resolve the payee by either (1) a payee with the same name or (2) creation of a new payee',
 								type: 'string',
-								required: false,
 								default: '',
 							},
 							{
@@ -351,14 +345,12 @@ export const scheduledTransactionsFields: INodeProperties[] = [
 								name: 'category_id',
 								description: 'The category for the subtransaction. Credit Card Payment categories are not permitted and will be ignored if supplied.',
 								type: 'string',
-								required: false,
 								default: '',
 							},
 							{
 								displayName: 'Memo',
 								name: 'memo',
 								type: 'string',
-								required: false,
 								default: '',
 							},
 						],
@@ -384,35 +376,31 @@ export const scheduledTransactionsFields: INodeProperties[] = [
 				]
 			}
 		},
+		// eslint-disable-next-line n8n-nodes-base/node-param-collection-type-unsorted-items
 		options: [
-
 			{
 				displayName: 'Payee ID',
 				name: 'payeeId',
 				type: 'string',
-				required: false,
 				default: '',
 			},
 			{
 				displayName: 'Payee Name',
 				name: 'payeeName',
-				description: 'If a payee name value is provided and payee id has a null value, the payee name value will be used to resolve the payee by either (1) a payee with the same name or (2) creation of a new payee.',
+				description: 'If a payee name value is provided and payee ID has a null value, the payee name value will be used to resolve the payee by either (1) a payee with the same name or (2) creation of a new payee',
 				type: 'string',
-				required: false,
 				default: '',
 			},
 			{
 				displayName: 'Category ID',
 				name: 'categoryId',
 				type: 'string',
-				required: false,
 				default: '',
 			},
 			{
 				displayName: 'Memo',
 				name: 'memo',
 				type: 'string',
-				required: false,
 				default: '',
 			},
 			{
@@ -425,10 +413,12 @@ export const scheduledTransactionsFields: INodeProperties[] = [
 				typeOptions: {
 					multipleValues: true,
 				},
+				// eslint-disable-next-line n8n-nodes-base/node-param-options-type-unsorted-items
 				options: [
 					{
 						name: 'subtransactionFields',
 						displayName: 'Sub Transaction',
+						// eslint-disable-next-line n8n-nodes-base/node-param-fixed-collection-type-unsorted-items
 						values: [
 							{
 								displayName: 'Amount',
@@ -445,15 +435,13 @@ export const scheduledTransactionsFields: INodeProperties[] = [
 								displayName: 'Payee ID',
 								name: 'payee_id',
 								type: 'string',
-								required: false,
 								default: '',
 							},
 							{
 								displayName: 'Payee Name',
 								name: 'payee_name',
-								description: 'If a payee name value is provided and payee id has a null value, the payee name value will be used to resolve the payee by either (1) a payee with the same name or (2) creation of a new payee.',
+								description: 'If a payee name value is provided and payee ID has a null value, the payee name value will be used to resolve the payee by either (1) a payee with the same name or (2) creation of a new payee',
 								type: 'string',
-								required: false,
 								default: '',
 							},
 							{
@@ -461,14 +449,12 @@ export const scheduledTransactionsFields: INodeProperties[] = [
 								name: 'category_id',
 								description: 'The category for the subtransaction. Credit Card Payment categories are not permitted and will be ignored if supplied.',
 								type: 'string',
-								required: false,
 								default: '',
 							},
 							{
 								displayName: 'Memo',
 								name: 'memo',
 								type: 'string',
-								required: false,
 								default: '',
 							},
 						],

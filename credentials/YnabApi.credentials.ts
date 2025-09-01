@@ -5,8 +5,8 @@ import {
 } from 'n8n-workflow';
 
 export class YnabApi implements ICredentialType {
-	name = 'YnabApi';
-
+	name = 'ynabApi';
+	documentationUrl = 'https://github.com/liamdmcgarrigle/n8n-nodes-ynab?tab=readme-ov-file#credentials';
 	displayName = 'YNAB API';
 
 	genericAuth = true;

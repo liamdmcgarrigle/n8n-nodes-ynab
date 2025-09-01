@@ -25,7 +25,7 @@ export const payeeLocationsOperations: INodeProperties[] = [
 				action: 'Get location by payee',
 			},
 		],
-		default: 'listPayeeLocations',
+		default: 'listPayeesLocations',
 		displayOptions: {
 			show: {
 				resource: [

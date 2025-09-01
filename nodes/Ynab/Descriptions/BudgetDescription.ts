@@ -11,24 +11,13 @@ export const budgetOperations: INodeProperties[] = [
 			{
 				name: 'Budget Details',
 				value: 'budgetDetails',
-				action: 'Budget Details',
+				action: 'Budget details',
 				description: 'View authenticated budgets details including all accounts and categories',
-				// routing: {
-				// 	request: {
-				// 		method: 'GET',
-				// 	},
-				// },
 			},
 			{
 				name: 'Budget Settings',
 				value: 'budgetSettings',
 				action: 'List budget settings',
-				// routing: {
-				// 	request: {
-				// 		method: 'GET',
-				// 		url: '/settings'
-				// 	},
-				// },
 
 			},
 

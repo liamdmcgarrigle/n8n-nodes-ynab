@@ -47,11 +47,6 @@ export const accountsFields: INodeProperties[] = [
 		type: 'string',
 		required: true,
 		default: '',
-		// routing: {
-		// 	request: {
-		// 		url: "=/accounts/{{$parameter.accountId}}",
-		// 	},
-		// },
 		displayOptions: {
 			show: {
 				resource: [
@@ -75,15 +70,6 @@ export const accountsFields: INodeProperties[] = [
 		type: 'string',
 		required: true,
 		default: '',
-		// routing: {
-		// 	request: {
-			// 	body: {
-			// 		"account": {
-			// 			"name":'={{$parameter.accountName}}',
-			// 			}
-			// 	}
-			// },
-		// },
 		displayOptions: {
 			show: {
 				resource: [
@@ -120,6 +106,7 @@ export const accountsFields: INodeProperties[] = [
 		displayName: 'Account Type',
 		name: 'accountType',
 		type: 'options',
+		// eslint-disable-next-line n8n-nodes-base/node-param-options-type-unsorted-items
 		options: [
 			{
 				name: 'Checking',

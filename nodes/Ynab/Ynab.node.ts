@@ -23,7 +23,7 @@ import { scheduledTransactionsFields, scheduledTransactionsOperations } from './
 export class Ynab implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'YNAB',
-		name: 'Ynab',
+		name: 'ynab',
 		group: ['Finance & Accounting'],
 		version: 1,
 		subtitle: '={{ $parameter["operation"] }}',
@@ -43,7 +43,7 @@ export class Ynab implements INodeType {
 		outputs: [NodeConnectionType.Main],
 		credentials: [
 			{
-				name: 'YnabApi',
+				name: 'ynabApi',
 				required: true,
 			},
 		],

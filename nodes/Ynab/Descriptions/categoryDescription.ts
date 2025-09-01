@@ -70,7 +70,6 @@ export const categoryFields: INodeProperties[] = [
 		displayName: 'Name',
 		name: 'name',
 		type: 'string',
-		required: false,
 		default: '',
 		displayOptions: {
 			show: {
@@ -87,7 +86,6 @@ export const categoryFields: INodeProperties[] = [
 		displayName: 'Note',
 		name: 'note',
 		type: 'string',
-		required: false,
 		default: '',
 		displayOptions: {
 			show: {
