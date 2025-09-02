@@ -6,6 +6,6 @@ import {
 export async function getBugdetId(
 	func: IExecuteFunctions,
 ) {
-	const cred = await func.getCredentials('YnabApi');
+	const cred = await func.getCredentials('ynabApi');
 	return cred.budgetId;
 }

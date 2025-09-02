@@ -41,9 +41,9 @@ async function apiRequest(
 		qs,
 		returnFullResponse: false,
 	};
-	// Will inject Authorization and handle refresh based on `YnabApi` credentials
+	// Will inject Authorization and handle refresh based on `yNabApi` credentials
 	// Do NOT call getCredentials() directly for auth.
-	return await this.helpers.httpRequestWithAuthentication.call(this, 'YnabApi', options);
+	return await this.helpers.httpRequestWithAuthentication.call(this, 'ynabApi', options);
 }
 
 export class YnabTrigger implements INodeType {
@@ -59,7 +59,7 @@ export class YnabTrigger implements INodeType {
 		polling: true,
 		inputs: [],
 		outputs: [NodeConnectionType.Main],
-		credentials: [{ name: 'YnabApi', required: true }],
+		credentials: [{ name: 'ynabApi', required: true }],
 		properties: [
 			{
 				displayName: 'Event',
@@ -168,7 +168,7 @@ export class YnabTrigger implements INodeType {
 	methods = {
 		loadOptions: {
 			async getAccounts(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
-				const { budgetId } = (await this.getCredentials('YnabApi')) as IDataObject;
+				const { budgetId } = (await this.getCredentials('ynabApi')) as IDataObject;
 				const res = await apiRequest.call(this, 'GET', `/budgets/${budgetId}/accounts`);
 				const out: INodePropertyOptions[] = [{ name: 'All Accounts', value: '' }];
 				for (const a of res?.data?.accounts ?? []) {
@@ -177,7 +177,7 @@ export class YnabTrigger implements INodeType {
 				return out;
 			},
 			async getCategories(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
-				const { budgetId } = (await this.getCredentials('YnabApi')) as IDataObject;
+				const { budgetId } = (await this.getCredentials('ynabApi')) as IDataObject;
 				const res = await apiRequest.call(this, 'GET', `/budgets/${budgetId}/categories`);
 				const out: INodePropertyOptions[] = [{ name: 'All Categories', value: '' }];
 				for (const g of res?.data?.category_groups ?? []) {
@@ -189,7 +189,7 @@ export class YnabTrigger implements INodeType {
 				return out;
 			},
 			async getPayees(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
-				const { budgetId } = (await this.getCredentials('YnabApi')) as IDataObject;
+				const { budgetId } = (await this.getCredentials('ynabApi')) as IDataObject;
 				const res = await apiRequest.call(this, 'GET', `/budgets/${budgetId}/payees`);
 				const out: INodePropertyOptions[] = [{ name: 'All Payees', value: '' }];
 				for (const p of res?.data?.payees ?? []) if (!p.deleted) out.push({ name: p.name, value: p.id });
@@ -201,7 +201,7 @@ export class YnabTrigger implements INodeType {
 
 	async poll(this: IPollFunctions): Promise<INodeExecutionData[][] | null> {
 		const state = this.getWorkflowStaticData('node') as YnabStaticData;
-		const { budgetId } = (await this.getCredentials('YnabApi')) as IDataObject;
+		const { budgetId } = (await this.getCredentials('ynabApi')) as IDataObject;
 
 		const event = this.getNodeParameter('event') as string;
 		const filters = this.getNodeParameter('filters', {}) as IDataObject;

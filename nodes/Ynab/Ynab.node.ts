@@ -113,7 +113,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -130,7 +130,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -155,7 +155,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -173,7 +173,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -204,7 +204,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -229,7 +229,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -250,7 +250,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -288,7 +288,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -312,7 +312,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -331,7 +331,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -361,7 +361,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -386,7 +386,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -405,7 +405,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -425,7 +425,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -451,7 +451,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -473,7 +473,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -493,7 +493,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -525,7 +525,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -544,7 +544,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -570,7 +570,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -596,7 +596,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -616,7 +616,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -635,7 +635,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -705,7 +705,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -730,7 +730,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -807,7 +807,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -826,7 +826,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -850,7 +850,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -869,7 +869,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -935,7 +935,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -1010,7 +1010,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -1092,7 +1092,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
@@ -1111,7 +1111,7 @@ export class Ynab implements INodeType {
 
 							const response = await this.helpers.httpRequestWithAuthentication.call(
 								this,
-								'YnabApi',
+								'ynabApi',
 								options,
 							);
 
